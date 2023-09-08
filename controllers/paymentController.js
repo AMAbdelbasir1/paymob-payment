@@ -7,16 +7,14 @@ const INTEGRATION_ID = process.env.PAYMOB_INTEGRATION_ID;
 
 const paymentAll = async (req, res) => {
   try {
-    const items = req.body.items;
-
     // First request to get token
     const tokenResponse = await createToken();
     const authToken = tokenResponse.token;
 
     // Second request to make order
-    const orderResponse = await createOrder(authToken, items);
-    // console.log(orderResponse);
+    const orderResponse = await createOrder(authToken);
 
+    // console.log(orderResponse);
     const orderId = orderResponse.id;
 
     // Third request to get form link
@@ -25,8 +23,10 @@ const paymentAll = async (req, res) => {
     const paymentToken = paymentKeyResponse.token;
 
     // Open the browser with the form link
-    open(ifameOne + paymentToken);
-
+    // open(ifameOne + paymentToken);
+    if (!paymentToken) {
+      return res.status(400).json({ error: paymentKeyResponse });
+    }
     // Return the form link in the response
     res.status(200).json({ url: ifameOne + paymentToken });
   } catch (error) {
@@ -53,7 +53,7 @@ function createToken() {
   });
 }
 
-function createOrder(authToken, items) {
+function createOrder(authToken) {
   return new Promise((resolve, reject) => {
     request.post(
       "https://accept.paymob.com/api/ecommerce/orders",
@@ -64,32 +64,15 @@ function createOrder(authToken, items) {
           delivery_needed: "false",
           amount_cents: "100",
           currency: "EGP",
-          items: items,
+          // merchant_order_id: "21334",
+          items: [],
           shipping_data: {
-            apartment: "803",
-            email: "claudette09@exa.com",
-            floor: "42",
-            first_name: "Clifford",
-            street: "Ethan Land",
-            building: "8028",
-            phone_number: "+86(8)9135210487",
-            postal_code: "01898",
-            extra_description: "8 Ram , 128 Giga",
-            city: "Jaskolskiburgh",
-            country: "CR",
-            last_name: "Nicolas",
-            state: "Utah",
+            email: "ahmed.abdelbasir140@gmail.com",
+            first_name: "ahmed abdelbasir",
+            last_name: "none",
+            phone_number: "012345684",
           },
-          shipping_details: {
-            notes: " test",
-            number_of_packages: 1,
-            weight: 1,
-            weight_unit: "Kilogram",
-            length: 1,
-            width: 1,
-            height: 1,
-            contents: "product of some sorts",
-          },
+          user_id: "dfqfqfqq",
         }),
       },
       (error, response) => {
@@ -115,19 +98,16 @@ function createPaymentKey(authToken, orderId) {
           expiration: 3600,
           order_id: orderId,
           billing_data: {
-            apartment: "803",
             email: "claudette09@exa.com",
-            floor: "42",
-            first_name: "Clifford",
-            street: "Ethan Land",
-            building: "8028",
-            phone_number: "+86(8)9135210487",
-            shipping_method: "PKG",
-            postal_code: "01898",
-            city: "Jaskolskiburgh",
-            country: "CR",
-            last_name: "Nicolas",
-            state: "Utah",
+            first_name: "ahmed",
+            phone_number: "0123456789",
+            last_name: "abdelbasir",
+            street: "NA",
+            building: "NA",
+            floor: "NA",
+            apartment: "NA",
+            city: "NA",
+            country: "NA",
           },
           currency: "EGP",
           integration_id: INTEGRATION_ID,
@@ -148,7 +128,7 @@ function createPaymentKey(authToken, orderId) {
 const webhookProcessed = (req, res) => {
   try {
     const payload = req.body.obj;
-    console.log(req.query.hmac);
+    console.log(payload);
     res.json({
       message: "Transaction processed webhook received successfully",
     });
