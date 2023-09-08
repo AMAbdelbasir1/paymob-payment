@@ -148,10 +148,9 @@ function createPaymentKey(authToken, orderId) {
 const webhookProcessed = (req, res) => {
   try {
     const payload = req.body.obj;
-    console.log(payload);
+    console.log(req.query.hmac);
     res.json({
       message: "Transaction processed webhook received successfully",
-      payload,
     });
   } catch (error) {
     res.status(400).json({ msg: error });
@@ -160,4 +159,4 @@ const webhookProcessed = (req, res) => {
 const webhookResponse = (req, res) => {
   res.json({ message: "Transaction response webhook received successfully" });
 };
-module.exports = { paymentAll,  webhookProcessed, webhookResponse };
+module.exports = { paymentAll, webhookProcessed, webhookResponse };
