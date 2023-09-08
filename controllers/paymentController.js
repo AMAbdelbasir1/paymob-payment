@@ -64,15 +64,14 @@ function createOrder(authToken) {
           delivery_needed: "false",
           amount_cents: "100",
           currency: "EGP",
-          // merchant_order_id: "21334",
           items: [],
           shipping_data: {
             email: "ahmed.abdelbasir140@gmail.com",
-            first_name: "ahmed abdelbasir",
-            last_name: "none",
+            first_name: "ahmed",
+            last_name: "abdelbasir",
             phone_number: "012345684",
           },
-          user_id: "dfqfqfqq",
+          user_id: "userId",
         }),
       },
       (error, response) => {
@@ -95,7 +94,7 @@ function createPaymentKey(authToken, orderId) {
         body: JSON.stringify({
           auth_token: authToken,
           amount_cents: "100",
-          expiration: 60,
+          expiration: 120,
           order_id: orderId,
           billing_data: {
             email: "claudette09@exa.com",
@@ -112,6 +111,7 @@ function createPaymentKey(authToken, orderId) {
           currency: "EGP",
           integration_id: INTEGRATION_ID,
           lock_order_when_paid: "false",
+          user_id: "userId",
         }),
       },
       (error, response) => {
@@ -128,7 +128,8 @@ function createPaymentKey(authToken, orderId) {
 const webhookProcessed = (req, res) => {
   try {
     const payload = req.body.obj;
-    console.log(payload);
+    const userId = payload.user_id;
+    console.log(userId);
     res.json({
       message: "Transaction processed webhook received successfully",
     });
