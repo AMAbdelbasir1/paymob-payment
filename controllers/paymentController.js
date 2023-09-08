@@ -65,7 +65,15 @@ function createOrder(authToken) {
           amount_cents: "100",
           currency: "EGP",
           // merchant_order_id: "21334",
-          items: [],
+          items: [
+            { orderId: "ahdasda" },
+            {
+              name: "ASC1515",
+              amount_cents: "500000",
+              description: "Smart Watch",
+              quantity: "1",
+            },
+          ],
           shipping_data: {
             email: "ahmed.abdelbasir140@gmail.com",
             first_name: "ahmed abdelbasir",
