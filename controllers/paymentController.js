@@ -129,7 +129,7 @@ const webhookProcessed = (req, res) => {
   try {
     const payload = req.body.obj;
     const userId = payload.user_id;
-    console.log(userId);
+    console.log(payload);
     res.json({
       message: "Transaction processed webhook received successfully",
     });
