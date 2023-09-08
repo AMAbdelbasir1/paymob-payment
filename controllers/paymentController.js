@@ -65,15 +65,7 @@ function createOrder(authToken) {
           amount_cents: "100",
           currency: "EGP",
           // merchant_order_id: "21334",
-          items: [
-            { orderId: "ahdasda" },
-            {
-              name: "ASC1515",
-              amount_cents: "500000",
-              description: "Smart Watch",
-              quantity: "1",
-            },
-          ],
+          items: [],
           shipping_data: {
             email: "ahmed.abdelbasir140@gmail.com",
             first_name: "ahmed abdelbasir",
@@ -103,7 +95,7 @@ function createPaymentKey(authToken, orderId) {
         body: JSON.stringify({
           auth_token: authToken,
           amount_cents: "100",
-          expiration: 3600,
+          expiration: 60,
           order_id: orderId,
           billing_data: {
             email: "claudette09@exa.com",
