@@ -11,5 +11,5 @@ router.get("/", (req, res) => res.send("Hello World!"));
 router.post("/visa", paymentAll);
 router.post("/webhook/processed", webhookProcessed);
 
-router.post("/webhook/response", webhookResponse);
+router.get("/webhook/response", webhookResponse);
 module.exports = router;
