@@ -8,7 +8,7 @@ const paymentRoute = require("./routes/paymentRouter");
 app.use("/paymob", paymentRoute);
 setInterval(function () {
   request.get(
-    "http://localhost:3000/paymob",
+    `${process.env.SERVER_HOST}/paymob`,
     {
       headers: { "Content-Type": "application/json" },
     },
